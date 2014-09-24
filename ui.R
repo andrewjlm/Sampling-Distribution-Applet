@@ -1,30 +1,17 @@
-
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
-library(shiny)
-
 shinyUI(fluidPage(
-
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
+  titlePanel("Simulated Sampling Distribution"),
+  
   sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
-
-    # Show a plot of the generated distribution
+    sidebarPanel(helpText("Simulate the sampling distribution of the minimum or maximum value of the samples."),
+                 radioButtons("minOrMax", label = h4("Minimum or Maximum?"),
+                              choices = list("Minimum" = 1, "Maximum" = 2), selected = 1),
+                 numericInput("sampleSize",
+                              label = h4("Sample Size"),
+                              value = 10),
+                 numericInput("numSamples",
+                              label = h4("Number of Samples"),
+                              value = 1),
+                 submitButton("Draw Samples")),
     mainPanel(
-      plotOutput("distPlot")
-    )
-  )
+      h3(textOutput("Plots"))))
 ))
