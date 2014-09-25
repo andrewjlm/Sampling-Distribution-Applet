@@ -11,7 +11,7 @@ shinyUI(fluidPage(
                               value = 10),
                  numericInput("numSamples",
                               label = h4("Number of Samples"),
-                              value = 1),
+                              value = 5),
                  submitButton("Draw Samples")),
     mainPanel(
       tabsetPanel(
@@ -21,6 +21,7 @@ shinyUI(fluidPage(
         #tabPanel("Latest Sample"),
         tabPanel("Sampling Distribution",
                  plotOutput("sampleHistogram", width=400,
-                            height = 300)))
+                            height = 300),
+                 verbatimTextOutput("sampleSummary")))
       ))
 ))

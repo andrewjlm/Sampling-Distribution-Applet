@@ -11,9 +11,17 @@ shinyServer(function(input, output) {
   
   # Get the full sample
   fullSample <- reactive({
-    b.stat(diamonds[, input$var],
-                  input$sampleSize,
-                  input$numSamples, input$minOrMax)
+    min <- b.min(selectedData(),
+                 input$sampleSize,
+                 input$numSamples)
+    max <- b.max(selectedData(),
+                 input$sampleSize,
+                 input$numSamples)
+    data <- if(input$minOrMax == "1") {
+      min }
+    else {
+      max }
+    data
   })
   
   # Draw the population histogram and summary statistics
@@ -31,6 +39,12 @@ shinyServer(function(input, output) {
   
   # Draw the sample histogram and summary statistics
   output$sampleHistogram <- renderPlot({
-    hist(fullSample())
+    hist(fullSample()$stats, xlab = input$var,
+         main = paste("Histogram of", input$var,
+                      ifelse(input$minOrMax == "1", "Minimum",
+                             "Maximum")))
+  })
+  output$sampleSummary <- renderPrint({
+    summary(fullSample()$stats)
   })
 })
