@@ -1,6 +1,7 @@
 source("helpers.R")
-library(ggplot2)
+library(shiny)
 library(dplyr)
+library(ggplot2)
 
 shinyServer(function(input, output) {
   # Choose the selected column from the diamonds data
