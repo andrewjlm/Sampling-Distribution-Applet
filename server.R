@@ -38,4 +38,13 @@ shinyServer(function(input, output) {
   output$sampleSummary <- renderPrint({
     summary(stat())
   })
+  
+  output$ggTest <- renderPlot({
+    df <- data.frame(stat())
+    names(df) <- c("stat")
+    cat(str(df))
+    ggplot(df, aes(x = stat)) + geom_histogram() +
+      labs(title = paste("Histogram of", input$var, input$statistic),
+           x = input$var)
+  })
 })
