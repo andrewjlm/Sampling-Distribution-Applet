@@ -9,19 +9,16 @@ shinyServer(function(input, output) {
     diamonds[, input$var]
   })
   
-  # Get the full sample
-  fullSample <- reactive({
-    min <- b.min(selectedData(),
-                 input$sampleSize,
-                 input$numSamples)
-    max <- b.max(selectedData(),
-                 input$sampleSize,
-                 input$numSamples)
-    data <- if(input$minOrMax == "1") {
-      min }
-    else {
-      max }
-    data
+  stat <- reactive({
+    if(input$statistic == 'Minimum') {
+      df.stats(selectedData(), input$sampleSize, input$numSamples)$stat.min
+    } else if(input$statistic == 'Maximum') {
+      df.stats(selectedData(), input$sampleSize, input$numSamples)$stat.max
+    } else if (input$statistic == 'Mean') {
+      df.stats(selectedData(), input$sampleSize, input$numSamples)$stat.mean
+    } else if(input$statistic == 'Median') {
+      df.stats(selectedData(), input$sampleSize, input$numSamples)$stat.median
+    }
   })
   
   # Draw the population histogram and summary statistics
@@ -33,18 +30,12 @@ shinyServer(function(input, output) {
     summary(selectedData(), digits = 3)[c(1,6)]
   })
   
-  #output$sampleHistogram <- renderTable({
-  #  head(fullSample())
-  #})
-  
   # Draw the sample histogram and summary statistics
   output$sampleHistogram <- renderPlot({
-    hist(fullSample()$stats, xlab = input$var,
-         main = paste("Histogram of", input$var,
-                      ifelse(input$minOrMax == "1", "Minimum",
-                             "Maximum")))
+    hist(stat(), xlab = input$var,
+         main = paste("Histogram of", input$var, input$statistic))
   })
   output$sampleSummary <- renderPrint({
-    summary(fullSample()$stats)
+    summary(stat())
   })
 })
