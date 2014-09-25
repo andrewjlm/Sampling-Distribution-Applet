@@ -3,7 +3,7 @@ shinyUI(fluidPage(
   
   sidebarLayout(
     sidebarPanel(helpText("Simulate the sampling distribution of the minimum or maximum value of the samples."),
-                 selectInput('var', 'Variable to Sample', names(dataset)),
+                 selectInput('var', 'Variable to Sample', names(select(diamonds, carat, price))),
                  radioButtons('minOrMax', label = h4("Minimum or Maximum?"),
                               choices = list("Minimum" = 1, "Maximum" = 2), selected = 1),
                  numericInput("sampleSize",

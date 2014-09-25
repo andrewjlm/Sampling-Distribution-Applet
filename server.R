@@ -1,7 +1,6 @@
 source("helpers.R")
 library(ggplot2)
 library(dplyr)
-dataset <- select(diamonds, carat, price)
 
 shinyServer(function(input, output) {
   # Choose the selected column from the diamonds data
