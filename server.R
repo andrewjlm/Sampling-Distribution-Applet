@@ -31,10 +31,10 @@ shinyServer(function(input, output) {
       geom_vline(aes(xintercept = mean(pop)), color="red")
   })
   output$popSummary <- renderText({
-    paste("Min:", min(stat()), "  ",
-          "Mean:", mean(stat()), "  ",
-          "Median:", median(stat()), "  ",
-          "Max:", max(stat()))
+    paste("Min:", min(selectedData()), "  ",
+          "Mean:", mean(selectedData()), "  ",
+          "Median:", median(selectedData()), "  ",
+          "Max:", max(selectedData()))
   })
   
   # Draw the sample histogram and summary statistics
