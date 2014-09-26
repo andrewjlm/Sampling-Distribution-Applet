@@ -27,8 +27,6 @@ shinyUI(fluidPage(
         tabPanel("Sampling Distribution",
                  plotOutput("sampleHistogram", width=400,
                             height = 300),
-                 verbatimTextOutput("sampleSummary")),
-        tabPanel("test",
-                 plotOutput("ggTest")))
+                 verbatimTextOutput("sampleSummary")))
       ))
 ))
