@@ -28,8 +28,11 @@ shinyServer(function(input, output) {
     ggplot(df, aes(x = pop)) + geom_histogram() +
       labs(title = paste("Histogram of", input$var))
   })
-  output$popSummary <- renderPrint({
-    summary(selectedData(), digits = 3)[c(1,6)]
+  output$popSummary <- renderText({
+    paste("Min:", min(stat()), "  ",
+          "Mean:", mean(stat()), "  ",
+          "Median:", median(stat()), "  ",
+          "Max:", max(stat()))
   })
   
   # Draw the sample histogram and summary statistics
@@ -40,8 +43,9 @@ shinyServer(function(input, output) {
       labs(title = paste("Histogram of", input$var, input$statistic),
            x = input$var)
   })
-  output$sampleSummary <- renderPrint({
-    summary(stat())
+  output$sampleSummary <- renderText({
+    paste("Mean:", mean(stat()), "  ",
+          "SD:", format(sd(stat()), digits = 3))
   })
   
   #output$ggTest <- renderPlot({

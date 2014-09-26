@@ -7,9 +7,10 @@ shinyUI(fluidPage(
   
   sidebarLayout(
     sidebarPanel(helpText("Simulate the sampling distribution of the minimum or maximum value of the samples."),
-                 selectInput('var', 'Variable to Sample', names(select(diamonds, carat, price))),
+                 selectInput('var', label = h4('Variable to Sample'),
+                             names(select(diamonds, carat, price))),
                  selectInput('statistic', label = h4("Statistic?"),
-                              choices =
+                             choices =
                                list("Mean", "Median", "Minimum", "Maximum")),
                  numericInput("sampleSize",
                               label = h4("Sample Size"),
@@ -19,14 +20,12 @@ shinyUI(fluidPage(
                               value = 100),
                  submitButton("Draw Samples")),
     mainPanel(
-      tabsetPanel(
-        tabPanel("Population", plotOutput("popHistogram",
-                                          width=400, height=300),
-                 verbatimTextOutput("popSummary")),
-        #tabPanel("Latest Sample"),
-        tabPanel("Sampling Distribution",
-                 plotOutput("sampleHistogram", width=400,
-                            height = 300),
-                 verbatimTextOutput("sampleSummary")))
-      ))
-))
+      h4(textOutput("Population")),
+      plotOutput("popHistogram", width=400, height=250),
+      verbatimTextOutput("popSummary"),
+      h4(textOutput("Sampling Distribution")),
+      plotOutput("sampleHistogram", width=400, height = 250),
+      verbatimTextOutput("sampleSummary"))
+  )
+)
+)
