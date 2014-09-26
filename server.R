@@ -26,7 +26,9 @@ shinyServer(function(input, output) {
     df <- data.frame(selectedData())
     names(df) <- c("pop")
     ggplot(df, aes(x = pop)) + geom_histogram() +
-      labs(title = paste("Histogram of", input$var))
+      labs(title = paste("Histogram of", input$var),
+           x = input$var) +
+      geom_vline(aes(xintercept = mean(pop)), color="red")
   })
   output$popSummary <- renderText({
     paste("Min:", min(stat()), "  ",
@@ -41,7 +43,8 @@ shinyServer(function(input, output) {
     names(df) <- c("stat")
     ggplot(df, aes(x = stat)) + geom_histogram() +
       labs(title = paste("Histogram of", input$var, input$statistic),
-           x = input$var)
+           x = input$var) +
+      geom_vline(aes(xintercept = mean(stat)), color="red")
   })
   output$sampleSummary <- renderText({
     paste("Mean:", mean(stat()), "  ",
