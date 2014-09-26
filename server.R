@@ -26,10 +26,15 @@ shinyServer(function(input, output) {
     df <- data.frame(selectedData())
     names(df) <- c("pop")
     ggplot(df, aes(x = pop)) + geom_histogram() +
-      labs(title = paste("Histogram of", input$var))
+      labs(title = paste("Histogram of", input$var),
+           x = input$var) +
+      geom_vline(aes(xintercept = mean(pop)), color="red")
   })
-  output$popSummary <- renderPrint({
-    summary(selectedData(), digits = 3)[c(1,6)]
+  output$popSummary <- renderText({
+    paste("Min:", min(stat()), "  ",
+          "Mean:", mean(stat()), "  ",
+          "Median:", median(stat()), "  ",
+          "Max:", max(stat()))
   })
   
   # Draw the sample histogram and summary statistics
@@ -38,10 +43,12 @@ shinyServer(function(input, output) {
     names(df) <- c("stat")
     ggplot(df, aes(x = stat)) + geom_histogram() +
       labs(title = paste("Histogram of", input$var, input$statistic),
-           x = input$var)
+           x = input$var) +
+      geom_vline(aes(xintercept = mean(stat)), color="red")
   })
-  output$sampleSummary <- renderPrint({
-    summary(stat())
+  output$sampleSummary <- renderText({
+    paste("Mean:", mean(stat()), "  ",
+          "SD:", format(sd(stat()), digits = 3))
   })
   
   #output$ggTest <- renderPlot({
