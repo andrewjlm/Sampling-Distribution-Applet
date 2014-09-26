@@ -21,10 +21,10 @@ shinyUI(fluidPage(
                  submitButton("Draw Samples")),
     mainPanel(
       h4(textOutput("Population")),
-      plotOutput("popHistogram", width=400, height=250),
+      plotOutput("popHistogram", width=400, height=240),
       verbatimTextOutput("popSummary"),
       h4(textOutput("Sampling Distribution")),
-      plotOutput("sampleHistogram", width=400, height = 250),
+      plotOutput("sampleHistogram", width=400, height = 240),
       verbatimTextOutput("sampleSummary"))
   )
 )
