@@ -16,7 +16,7 @@ shinyUI(fluidPage(
                               value = 10),
                  numericInput("numSamples",
                               label = h4("Number of Samples"),
-                              value = 5),
+                              value = 100),
                  submitButton("Draw Samples")),
     mainPanel(
       tabsetPanel(
